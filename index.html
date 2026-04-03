@@ -1,0 +1,289 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-sans);}
+.wrap{padding:1.5rem 0;}
+.hdr{margin-bottom:1rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary);}
+.hdr h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;}
+.hdr p{font-size:13px;color:var(--color-text-secondary);}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;}
+
+.pipeline{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:16px;}
+.pipe-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;}
+.pipe-steps{display:flex;align-items:center;gap:0;overflow-x:auto;}
+.pipe-step{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:80px;}
+.pipe-label{font-size:10px;color:var(--color-text-secondary);text-align:center;line-height:1.3;}
+.pipe-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);}
+.pipe-arrow{font-size:12px;color:var(--color-border-secondary);flex-shrink:0;padding:0 2px;align-self:center;margin-bottom:18px;}
+.pipe-active .pipe-dot{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC;font-weight:500;}
+.pipe-active .pipe-label{color:#3C3489;font-weight:500;}
+.pipe-note{font-size:11px;color:#534AB7;margin-top:8px;padding:8px 10px;background:#EEEDFE;border-radius:var(--border-radius-md);}
+
+.tabs{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:16px;overflow-x:auto;}
+.tab{font-size:13px;padding:8px 14px;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;}
+.tab:hover{color:var(--color-text-primary);}
+.tab.active{color:var(--color-text-primary);font-weight:500;border-bottom-color:var(--color-text-primary);}
+
+.specialist-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.specialist-info{display:flex;align-items:center;gap:10px;}
+.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0;}
+.sp-name{font-size:14px;font-weight:500;color:var(--color-text-primary);}
+.sp-role{font-size:12px;color:var(--color-text-secondary);}
+.sp-score{text-align:right;}
+.sp-frac{font-size:20px;font-weight:500;color:var(--color-text-primary);}
+.sp-bar-wrap{width:80px;height:4px;background:var(--color-background-secondary);border-radius:99px;overflow:hidden;margin-top:4px;}
+.sp-bar{height:100%;border-radius:99px;transition:width 0.4s;}
+
+.clist{display:flex;flex-direction:column;gap:8px;}
+.crit{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);}
+.cscore{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}
+.cmax{font-size:10px;color:var(--color-text-secondary);}
+.cinfo{flex:1;}
+.cname{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;}
+.cdesc{font-size:12px;color:var(--color-text-secondary);line-height:1.5;}
+.jrow{margin-top:8px;}
+.jrow textarea{width:100%;font-size:12px;font-family:var(--font-sans);color:var(--color-text-primary);background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 8px;resize:vertical;min-height:48px;line-height:1.5;}
+.jrow textarea::placeholder{color:var(--color-text-secondary);}
+.ai-btn{margin-top:6px;font-size:11px;padding:4px 10px;color:#3C3489;border-color:#AFA9EC;background:#EEEDFE;}
+.ai-btn:hover{background:#CECBF6;}
+.ai-fb{margin-top:8px;padding:10px 12px;border-radius:var(--border-radius-md);border:0.5px solid #AFA9EC;background:#EEEDFE;font-size:12px;line-height:1.6;color:#26215C;display:none;}
+.ai-fb.show{display:block;}
+.ai-label{font-size:10px;font-weight:500;color:#534AB7;margin-bottom:4px;letter-spacing:0.05em;}
+.ai-limit{font-size:11px;color:#534AB7;opacity:0.8;margin-top:6px;font-style:italic;}
+.dot-anim{display:inline-flex;gap:3px;align-items:center;}
+.dot-anim span{display:inline-block;width:4px;height:4px;border-radius:50%;background:#534AB7;animation:bounce 1s infinite;}
+.dot-anim span:nth-child(2){animation-delay:.15s;}
+.dot-anim span:nth-child(3){animation-delay:.3s;}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-4px);}}
+
+.sum-card{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:16px;}
+.sum-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sum-total{font-size:28px;font-weight:500;color:var(--color-text-primary);}
+.sum-sub{font-size:14px;color:var(--color-text-secondary);margin-top:4px;}
+.r-badge{font-size:12px;font-weight:500;padding:5px 12px;border-radius:99px;}
+.sum-prog{height:8px;background:var(--color-background-primary);border-radius:99px;overflow:hidden;border:0.5px solid var(--color-border-tertiary);}
+.sum-fill{height:100%;border-radius:99px;transition:width 0.4s;}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:12px;}
+.sp-mini{background:var(--color-background-primary);border-radius:var(--border-radius-md);padding:10px;border:0.5px solid var(--color-border-tertiary);}
+.sp-mini-name{font-size:11px;color:var(--color-text-secondary);margin-bottom:2px;}
+.sp-mini-role{font-size:10px;color:var(--color-text-secondary);opacity:0.7;margin-bottom:4px;}
+.sp-mini-score{font-size:15px;font-weight:500;color:var(--color-text-primary);}
+.sp-mini-bar{height:3px;background:var(--color-background-secondary);border-radius:99px;margin-top:6px;overflow:hidden;}
+.sp-mini-fill{height:100%;border-radius:99px;transition:width 0.4s;}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;}
+.leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--color-text-secondary);}
+.leg-dot{width:10px;height:10px;border-radius:50%;}
+</style>
+
+<div class="wrap">
+<div class="hdr">
+  <h1>Translational readiness scorecard</h1>
+  <p>Multi-specialist cardiac regeneration evaluation platform</p>
+  <div class="badge-row">
+    <span class="badge" style="background:#EEEDFE;color:#3C3489;">AI reasoning check</span>
+    <span class="badge" style="background:#E1F5EE;color:#085041;">5 specialists</span>
+    <span class="badge" style="background:#E6F1FB;color:#0C447C;">Preclinical → Phase I</span>
+  </div>
+</div>
+
+<div class="pipeline">
+  <div class="pipe-title">Where this scorecard fits in the translational pipeline</div>
+  <div class="pipe-steps">
+    <div class="pipe-step"><div class="pipe-dot" style="font-size:9px;">Lab</div><div class="pipe-label">Academic<br>discovery</div></div>
+    <div class="pipe-arrow">›</div>
+    <div class="pipe-step pipe-active"><div class="pipe-dot">★</div><div class="pipe-label">Preclinical<br>evaluation</div></div>
+    <div class="pipe-arrow">›</div>
+    <div class="pipe-step pipe-active"><div class="pipe-dot">★</div><div class="pipe-label">IND / go-no-go<br>decision</div></div>
+    <div class="pipe-arrow">›</div>
+    <div class="pipe-step"><div class="pipe-dot" style="font-size:9px;">I</div><div class="pipe-label">Phase I<br>trial</div></div>
+    <div class="pipe-arrow">›</div>
+    <div class="pipe-step"><div class="pipe-dot" style="font-size:9px;">II</div><div class="pipe-label">Phase II/III<br>trial</div></div>
+    <div class="pipe-arrow">›</div>
+    <div class="pipe-step"><div class="pipe-dot" style="font-size:9px;">FDA</div><div class="pipe-label">Regulatory<br>approval</div></div>
+    <div class="pipe-arrow">›</div>
+    <div class="pipe-step"><div class="pipe-dot" style="font-size:9px;">Rx</div><div class="pipe-label">Clinical<br>practice</div></div>
+  </div>
+  <div class="pipe-note">★ Best used at the preclinical-to-IND transition — when an academic lab is deciding whether a therapy is ready to move toward a Phase I trial, seek industry partners, or pursue an investigational new drug application.</div>
+</div>
+
+<div class="sum-card">
+  <div class="sum-top">
+    <div><div class="sum-total" id="tot">0</div><div class="sum-sub">out of 50 points across 5 specialists</div></div>
+    <div class="r-badge" id="rbadge" style="background:#F1EFE8;color:#5F5E5A;">Not evaluated</div>
+  </div>
+  <div class="sum-prog"><div class="sum-fill" id="mprog" style="width:0%;background:#888780;"></div></div>
+  <div class="sp-grid" id="spgrid"></div>
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#E24B4A;"></div>Not ready (&lt;50%)</div>
+    <div class="leg"><div class="leg-dot" style="background:#EF9F27;"></div>Needs work (50–74%)</div>
+    <div class="leg"><div class="leg-dot" style="background:#639922;"></div>Ready (75–89%)</div>
+    <div class="leg"><div class="leg-dot" style="background:#1D9E75;"></div>Highly ready (≥90%)</div>
+  </div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+<div id="domain-panel"></div>
+</div>
+
+<script>
+const domains=[
+  {id:"bio",name:"Biology",role:"Cell biologist / Cardiologist",initials:"CB",avatarBg:"#E1F5EE",avatarColor:"#085041",criteria:[
+    {name:"Cell retention & engraftment",desc:"Evidence of sustained cell/vesicle retention in fibrotic myocardium beyond 72 hours"},
+    {name:"Viability in ischemic environment",desc:"Demonstrated survival under hypoxic, inflammatory, or fibrotic conditions"},
+    {name:"Paracrine mechanism evidence",desc:"Identifiable paracrine or cargo-mediated signaling with functional outcome data"},
+    {name:"Microenvironment compatibility",desc:"Interaction with post-MI ECM; no adverse remodeling signals"},
+    {name:"Dose–response characterization",desc:"Clear dose-response relationship established in relevant model"}
+  ]},
+  {id:"mech",name:"Mechanism",role:"Molecular biologist",initials:"MB",avatarBg:"#E6F1FB",avatarColor:"#0C447C",criteria:[
+    {name:"Defined mechanism of action",desc:"Specific molecular or cellular pathway identified; not solely correlational"},
+    {name:"Reproducibility across labs",desc:"Key findings replicated independently or in ≥2 model systems"},
+    {name:"Target specificity",desc:"Intervention acts on cardiac-specific targets; off-target effects characterized"},
+    {name:"Biomarker identification",desc:"At least one mechanism-linked biomarker proposed for clinical monitoring"},
+    {name:"Failure mode analysis",desc:"Potential mechanisms of therapeutic failure anticipated and tested"}
+  ]},
+  {id:"elec",name:"Electrophysiology",role:"Electrophysiologist",initials:"EP",avatarBg:"#FAEEDA",avatarColor:"#633806",criteria:[
+    {name:"Electrophysiological coupling",desc:"Evidence of functional gap-junction coupling or conduction integration"},
+    {name:"Arrhythmia risk assessment",desc:"Formal screening performed (patch-clamp, optical mapping, or telemetry)"},
+    {name:"Action potential maturity",desc:"Derived cardiomyocytes demonstrate adult-like action potential morphology"},
+    {name:"Pro-arrhythmic signal absence",desc:"No triggered activity or conduction delay at therapeutic dose"},
+    {name:"Long-term electrophysiology data",desc:"Electrical safety data available beyond 4 weeks post-implantation"}
+  ]},
+  {id:"immuno",name:"Immunology",role:"Immunologist",initials:"IM",avatarBg:"#FAECE7",avatarColor:"#712B13",criteria:[
+    {name:"Immunogenicity profiling",desc:"T-cell, NK-cell, and antibody-mediated responses characterized"},
+    {name:"Tumorigenicity absence",desc:"No evidence of teratoma, ectopic tissue, or uncontrolled proliferation"},
+    {name:"Inflammatory cytokine profile",desc:"Systemic cytokine response quantified; no pathological elevation at therapeutic doses"},
+    {name:"Manufacturing consistency",desc:"Batch-to-batch consistency demonstrated; potency assay validated"},
+    {name:"Regulatory pathway identified",desc:"Applicable regulatory framework (IND, IMPD) mapped for this therapy class"}
+  ]},
+  {id:"trial",name:"Clinical trial",role:"Clinical trialist",initials:"CT",avatarBg:"#EEEDFE",avatarColor:"#3C3489",criteria:[
+    {name:"Patient-centered primary endpoint",desc:"Primary endpoint is a clinical outcome (MACE, hospitalization, QoL), not surrogate alone"},
+    {name:"Biomarker surrogate validation",desc:"If surrogates used, validated against clinical outcomes in this therapy class"},
+    {name:"Trial design rigor",desc:"Randomized, blinded, adequately powered with pre-specified analysis plan"},
+    {name:"Population specificity",desc:"Target population clearly defined; inclusion/exclusion reflect mechanistic rationale"},
+    {name:"Translational model relevance",desc:"Preclinical model reflects human MI pathophysiology (large animal, infarct timing, comorbidities)"}
+  ]}
+];
+
+const ST={};
+domains.forEach(d=>{ST[d.id]={scores:new Array(d.criteria.length).fill(0),notes:new Array(d.criteria.length).fill("")};});
+let activeTab=domains[0].id;
+
+function gc(p){if(p>=0.9)return"#1D9E75";if(p>=0.75)return"#639922";if(p>=0.5)return"#EF9F27";return"#E24B4A";}
+function gr(p){
+  if(p>=0.9)return{label:"Highly ready",bg:"#E1F5EE",color:"#085041"};
+  if(p>=0.75)return{label:"Ready",bg:"#EAF3DE",color:"#27500A"};
+  if(p>=0.5)return{label:"Needs work",bg:"#FAEEDA",color:"#633806"};
+  if(p>0)return{label:"Not ready",bg:"#FCEBEB",color:"#791F1F"};
+  return{label:"Not evaluated",bg:"#F1EFE8",color:"#5F5E5A"};
+}
+function ds(id){return ST[id].scores.reduce((a,b)=>a+b,0);}
+function tot(){return domains.reduce((s,d)=>s+ds(d.id),0);}
+
+function updSummary(){
+  const t=tot(),p=t/50;
+  document.getElementById("tot").textContent=t;
+  const mp=document.getElementById("mprog");mp.style.width=Math.round(p*100)+"%";mp.style.background=gc(p);
+  const r=gr(p),b=document.getElementById("rbadge");b.textContent=r.label;b.style.background=r.bg;b.style.color=r.color;
+  const g=document.getElementById("spgrid");g.innerHTML="";
+  domains.forEach(d=>{
+    const s=ds(d.id),m=d.criteria.length*2,pp=s/m;
+    const el=document.createElement("div");el.className="sp-mini";
+    el.innerHTML=`<div class="sp-mini-name">${d.name}</div><div class="sp-mini-role">${d.role}</div><div class="sp-mini-score">${s}<span style="font-size:11px;color:var(--color-text-secondary);">/${m}</span></div><div class="sp-mini-bar"><div class="sp-mini-fill" style="width:${Math.round(pp*100)}%;background:${gc(pp)};"></div></div>`;
+    g.appendChild(el);
+  });
+}
+
+function renderTabs(){
+  const tabs=document.getElementById("tabs");tabs.innerHTML="";
+  domains.forEach(d=>{
+    const t=document.createElement("div");t.className="tab"+(d.id===activeTab?" active":"");
+    const s=ds(d.id),m=d.criteria.length*2;
+    t.textContent=`${d.name} ${s}/${m}`;
+    t.onclick=()=>{activeTab=d.id;renderTabs();renderPanel();};
+    tabs.appendChild(t);
+  });
+}
+
+function renderPanel(){
+  const d=domains.find(x=>x.id===activeTab);
+  const s=ds(d.id),m=d.criteria.length*2,p=s/m;
+  const panel=document.getElementById("domain-panel");
+  panel.innerHTML=`
+    <div class="specialist-hdr">
+      <div class="specialist-info">
+        <div class="avatar" style="background:${d.avatarBg};color:${d.avatarColor};">${d.initials}</div>
+        <div><div class="sp-name">${d.name}</div><div class="sp-role">Specialist: ${d.role}</div></div>
+      </div>
+      <div class="sp-score">
+        <div class="sp-frac">${s}/${m}</div>
+        <div class="sp-bar-wrap"><div class="sp-bar" id="sp-bar" style="width:${Math.round(p*100)}%;background:${gc(p)};"></div></div>
+      </div>
+    </div>
+    <div class="clist" id="clist"></div>`;
+  const cl=panel.querySelector("#clist");
+  d.criteria.forEach((c,i)=>{
+    const row=document.createElement("div");row.className="crit";
+    row.innerHTML=`
+      <div class="cscore">
+        <select style="width:48px;" onchange="setSc('${d.id}',${i},this.value)">
+          <option value="0"${ST[d.id].scores[i]===0?" selected":""}>0</option>
+          <option value="1"${ST[d.id].scores[i]===1?" selected":""}>1</option>
+          <option value="2"${ST[d.id].scores[i]===2?" selected":""}>2</option>
+        </select>
+        <div class="cmax">/ 2</div>
+      </div>
+      <div class="cinfo">
+        <div class="cname">${c.name}</div>
+        <div class="cdesc">${c.desc}</div>
+        <div class="jrow">
+          <textarea placeholder="Enter evidence or justification as ${d.role}…" onchange="setNote('${d.id}',${i},this.value)">${ST[d.id].notes[i]}</textarea>
+          <button class="ai-btn" onclick="getAI('${d.id}',${i})">Check my reasoning ↗</button>
+          <div class="ai-fb" id="fb-${d.id}-${i}"></div>
+        </div>
+      </div>`;
+    cl.appendChild(row);
+  });
+}
+
+function setSc(id,i,v){
+  ST[id].scores[i]=parseInt(v);
+  updSummary();renderTabs();
+  const s=ds(id),m=domains.find(x=>x.id===id).criteria.length*2,p=s/m;
+  const bar=document.getElementById("sp-bar");if(bar){bar.style.width=Math.round(p*100)+"%";bar.style.background=gc(p);}
+  const frac=document.querySelector(".sp-frac");if(frac)frac.textContent=`${s}/${m}`;
+}
+function setNote(id,i,v){ST[id].notes[i]=v;}
+
+async function getAI(id,i){
+  const d=domains.find(x=>x.id===id),c=d.criteria[i];
+  const score=ST[id].scores[i],note=ST[id].notes[i];
+  const fb=document.getElementById(`fb-${id}-${i}`);
+  fb.className="ai-fb show";
+  fb.innerHTML=`<div class="ai-label">Reasoning check</div><div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#534AB7;"><div class="dot-anim"><span></span><span></span><span></span></div><span style="margin-left:4px;">Analyzing…</span></div>`;
+  const prompt=`You are a translational medicine expert reviewing a cardiac regeneration therapy scorecard. A ${d.role} has evaluated the following:
+
+Domain: ${d.name}
+Criterion: ${c.name}
+Criterion description: ${c.desc}
+Score given: ${score}/2
+Justification provided: "${note||"(none provided)"}"
+
+Your role is strictly a REASONING CHECK — not scientific fact verification. Do not hallucinate or cite specific studies. Instead:
+1. Assess whether the logic connecting the justification to the score is internally consistent
+2. Point out any gaps in reasoning or missing considerations a ${d.role} should address
+3. Ask one targeted follow-up question to help the specialist strengthen their evaluation
+
+Keep it to 3-4 sentences. Be direct, constructive, and science-aware. Note: your feedback checks the reasoning structure, not whether cited evidence is factually accurate — the specialist is responsible for verifying their own sources.`;
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
+    const data=await res.json();
+    const text=data.content.map(x=>x.text||"").join("");
+    fb.innerHTML=`<div class="ai-label">Reasoning check</div><div>${text}</div><div class="ai-limit">Note: AI checks logical consistency only — verify all cited evidence independently. AI does not assess factual accuracy of studies.</div>`;
+  }catch(e){
+    fb.innerHTML=`<div class="ai-label">Reasoning check</div><div style="color:var(--color-text-danger);">Unable to connect. Please try again.</div>`;
+  }
+}
+
+renderTabs();renderPanel();updSummary();
+</script>
