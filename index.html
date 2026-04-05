@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Translational Scorecard</title>
+<title>Translational Readiness Scorecard</title>
 
 <style>
 :root{
@@ -15,217 +15,162 @@
   --border:#e5e7eb;
 }
 
-body{
-  margin:0;
-  font-family: Inter, system-ui, sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:24px;
-}
-
-.header{
-  margin-bottom:24px;
-}
-
-.header h1{
-  margin:0;
-  font-size:28px;
-}
-
-.header p{
-  color:var(--muted);
-}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:20px;
-}
-
-.score{
-  font-size:32px;
-  font-weight:600;
-}
-
-.domain-nav{
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
-}
-
-.domain-btn{
-  padding:8px 14px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:white;
-  cursor:pointer;
-}
-
-.domain-btn.active{
-  background:var(--primary);
-  color:white;
-  border:none;
-}
-
-.criterion{
-  padding:16px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin-bottom:14px;
-}
-
-.criterion h3{
-  margin:0 0 6px 0;
-  font-size:16px;
-}
-
-.criterion p{
-  margin:0 0 10px 0;
-  font-size:13px;
-  color:var(--muted);
-}
-
-.controls{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-select{
-  padding:6px;
-  border-radius:6px;
-}
-
-textarea{
-  width:100%;
-  margin-top:10px;
-  padding:8px;
-  border-radius:8px;
-  border:1px solid var(--border);
-  resize:vertical;
-  min-height:60px;
-}
-
-.next-btn{
-  margin-top:10px;
-  padding:10px 16px;
-  border:none;
-  border-radius:10px;
-  background:var(--primary);
-  color:white;
-  cursor:pointer;
-}
-
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);}
+.container{max-width:900px;margin:auto;padding:24px;}
+.header{margin-bottom:24px;}
+.header h1{margin:0;font-size:28px;}
+.header p{color:var(--muted);}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;}
+.score{font-size:32px;font-weight:600;}
+.domain-nav{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.domain-btn{padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:white;cursor:pointer;font-size:13px;}
+.domain-btn.active{background:var(--primary);color:white;border:none;}
+.criterion{padding:16px;border:1px solid var(--border);border-radius:12px;margin-bottom:14px;}
+.criterion h3{margin:0 0 6px 0;font-size:15px;}
+.criterion p{margin:0 0 10px 0;font-size:13px;color:var(--muted);}
+.controls{display:flex;gap:10px;align-items:center;margin-top:6px;}
+select{padding:6px;border-radius:6px;}
+textarea{width:100%;margin-top:10px;padding:8px;border-radius:8px;border:1px solid var(--border);resize:vertical;min-height:70px;}
+.domain-header{margin-bottom:16px;}
+.domain-header h2{margin:0;font-size:20px;}
+.domain-header p{margin:4px 0 0 0;color:var(--muted);font-size:13px;}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-  <div class="header">
-    <h1>Translational Readiness Scorecard</h1>
-    <p>Evaluate therapies across key domains</p>
-  </div>
+<div class="header">
+<h1>Translational Readiness Scorecard</h1>
+<p>Preclinical → IND evaluation tool for cardiac regeneration therapies</p>
+</div>
 
-  <div class="card">
-    <div>Total Score</div>
-    <div class="score" id="total">0</div>
-  </div>
+<div class="card">
+<div>Total Score</div>
+<div class="score" id="total">0</div>
+</div>
 
-  <div class="domain-nav" id="nav"></div>
-
-  <div class="card" id="content"></div>
+<div class="domain-nav" id="nav"></div>
+<div class="card" id="content"></div>
 
 </div>
 
 <script>
 
 const domains = [
-  {
-    name:"Biology",
-    criteria:[
-      {title:"Cell retention",desc:"Retention beyond 72h"},
-      {title:"Viability",desc:"Survival in ischemic conditions"}
-    ]
-  },
-  {
-    name:"Clinical",
-    criteria:[
-      {title:"Endpoints",desc:"Patient-centered outcomes"},
-      {title:"Design",desc:"Randomized, controlled"}
-    ]
-  }
+{
+name:"Biological Compatibility",
+role:"Cell biologist / Cardiologist",
+criteria:[
+{t:"Cell Retention and Engraftment",d:"Sustained retention beyond 72h in fibrotic myocardium"},
+{t:"Viability in Ischemic Environment",d:"Survival under hypoxic/inflammatory conditions"},
+{t:"Paracrine Mechanism Evidence",d:"Identified signaling mechanism with functional data"},
+{t:"Microenvironment Compatibility",d:"No adverse ECM remodeling signals"},
+{t:"Dose–Response Characterization",d:"Clear dose-response in relevant model"}
+]
+},
+{
+name:"Mechanistic Clarity",
+role:"Molecular biologist",
+criteria:[
+{t:"Defined Mechanism of Action",d:"Specific pathway identified"},
+{t:"Reproducibility",d:"Replicated across labs or models"},
+{t:"Target Specificity",d:"Cardiac-specific targeting validated"},
+{t:"Biomarker Identification",d:"Mechanism-linked biomarker proposed"},
+{t:"Failure Mode Analysis",d:"Failure risks explored/tested"}
+]
+},
+{
+name:"Electrical Integration",
+role:"Electrophysiologist",
+criteria:[
+{t:"Electrophysiological Coupling",d:"Functional electrical integration"},
+{t:"Arrhythmia Risk Assessment",d:"Formal arrhythmia screening"},
+{t:"Action Potential Maturity",d:"Adult-like electrophysiology"},
+{t:"Absence of Pro-arrhythmic Signals",d:"No abnormal electrical activity"},
+{t:"Long-Term Data",d:">4 week safety data"}
+]
+},
+{
+name:"Immunologic Safety",
+role:"Immunologist",
+criteria:[
+{t:"Immunogenicity Profiling",d:"Immune response characterized"},
+{t:"Absence of Tumorigenicity",d:"No uncontrolled growth"},
+{t:"Cytokine Profile",d:"No pathological inflammation"},
+{t:"Manufacturing Consistency",d:"Batch reproducibility"},
+{t:"Regulatory Pathway",d:"IND/IMPD pathway defined"}
+]
+},
+{
+name:"Clinical Trial Alignment",
+role:"Clinical trialist",
+criteria:[
+{t:"Patient-Centered Endpoint",d:"Clinical outcomes prioritized"},
+{t:"Biomarker Validation",d:"Surrogates validated"},
+{t:"Trial Design Rigor",d:"Randomized/blinded design"},
+{t:"Population Specificity",d:"Defined inclusion criteria"},
+{t:"Model Relevance",d:"Preclinical model reflects human MI"}
+]
+}
 ];
 
 let active = 0;
 const state = domains.map(d=>d.criteria.map(()=>0));
 
-function total(){
-  return state.flat().reduce((a,b)=>a+b,0);
-}
+function total(){return state.flat().reduce((a,b)=>a+b,0);}
 
 function renderNav(){
-  const nav=document.getElementById('nav');
-  nav.innerHTML='';
-
-  domains.forEach((d,i)=>{
-    const btn=document.createElement('button');
-    btn.className='domain-btn'+(i===active?' active':'');
-    btn.innerText=d.name;
-    btn.onclick=()=>{active=i;render();};
-    nav.appendChild(btn);
-  });
+const nav=document.getElementById('nav');nav.innerHTML='';
+domains.forEach((d,i)=>{
+const btn=document.createElement('button');
+btn.className='domain-btn'+(i===active?' active':'');
+btn.innerText=d.name;
+btn.onclick=()=>{active=i;render();};
+nav.appendChild(btn);
+});
 }
 
 function renderContent(){
-  const el=document.getElementById('content');
-  el.innerHTML='';
+const el=document.getElementById('content');
+el.innerHTML='';
 
-  domains[active].criteria.forEach((c,i)=>{
-    const div=document.createElement('div');
-    div.className='criterion';
+const d=domains[active];
 
-    div.innerHTML=`
-      <h3>${c.title}</h3>
-      <p>${c.desc}</p>
-      <div class="controls">
-        Score:
-        <select onchange="setScore(${active},${i},this.value)">
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
-      </div>
-      <textarea placeholder="Add justification..."></textarea>
-    `;
+const header=document.createElement('div');
+header.className='domain-header';
+header.innerHTML=`<h2>${d.name}</h2><p>Specialist: ${d.role}</p>`;
+el.appendChild(header);
 
-    el.appendChild(div);
-  });
+
+d.criteria.forEach((c,i)=>{
+const div=document.createElement('div');
+div.className='criterion';
+
+div.innerHTML=`
+<h3>${c.t}</h3>
+<p>${c.d}</p>
+<div class="controls">
+Score:
+<select onchange="setScore(${active},${i},this.value)">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+</div>
+<textarea placeholder="Write justification based on experimental evidence..."></textarea>
+`;
+
+el.appendChild(div);
+});
 }
 
-function setScore(d,i,val){
-  state[d][i]=parseInt(val);
-  document.getElementById('total').innerText=total();
-}
+function setScore(d,i,val){state[d][i]=parseInt(val);document.getElementById('total').innerText=total();}
 
-function render(){
-  renderNav();
-  renderContent();
-  document.getElementById('total').innerText=total();
-}
+function render(){renderNav();renderContent();document.getElementById('total').innerText=total();}
 
 render();
 
 </script>
-
 </body>
 </html>
